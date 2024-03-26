@@ -14,6 +14,10 @@ function App() {
     localStorage.setItem("feedback", JSON.stringify(feedback));
   }, [feedback]);
 
+  const totalFeedback = feedback.good + feedback.neutral + feedback.bad;
+  const positivePercentage =
+    totalFeedback > 0 ? Math.round((feedback.good / totalFeedback) * 100) : 0;
+
   const updateFeedback = (type) => {
     if (type === "reset") {
       setFeedback({ good: 0, neutral: 0, bad: 0 });
@@ -29,10 +33,15 @@ function App() {
     <div className="App">
       <Description />
       <Options feedback={feedback} updateFeedback={updateFeedback} />
-      {Object.values(feedback).reduce((total, val) => total + val, 0) > 0 && (
-        <Feedback feedback={feedback} />
+      {totalFeedback > 0 ? (
+        <Feedback
+          feedback={feedback}
+          totalFeedback={totalFeedback}
+          positivePercentage={positivePercentage}
+        />
+      ) : (
+        <Notification />
       )}
-      <Notification feedback={feedback} />
     </div>
   );
 }

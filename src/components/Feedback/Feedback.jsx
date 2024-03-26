@@ -1,10 +1,7 @@
 import React from "react";
 
-function Feedback({ feedback }) {
+function Feedback({ feedback, totalFeedback, positivePercentage }) {
   const { good, neutral, bad } = feedback;
-  const totalFeedback = good + neutral + bad;
-  const positivePercentage =
-    totalFeedback > 0 ? Math.round((good / totalFeedback) * 100) : 0;
 
   return (
     <div>
